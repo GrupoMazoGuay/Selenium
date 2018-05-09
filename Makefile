@@ -1,6 +1,8 @@
 
 test: executeTests
 
+testAutoServer: startServer executeTests stopServer
+
 executeTests:
 	sh -c '. venv/bin/activate; nosetests tests'
 
@@ -18,11 +20,10 @@ venv:
 startServer:
 	cd www
 	python -m SimpleHTTPServer 8080 &
-	ID=$(echo $!)
-	echo ${ID}
-	echo hola
 
 stopServer:
-	kill "${ID}"
+	#!/bin/bash
+	lsof -i :8080 | sed -n '2,2p' | cut -d' ' -f2 | xargs kill
+
 
 

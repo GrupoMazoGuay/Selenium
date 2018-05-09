@@ -43,7 +43,7 @@ Para ello ejecutamos el comando:
 python -m SimpleHTTPServer 8080
 ```
 Este comando sirve para levantar el servidor con la página web.
-Realmente está sirviendo la carpeta principal, pero los tests están configurados para acceder a la ruta www/, esto es así porque se pretendía levantar el servidor desde el propio script, y hasta que se realice vamos a dejarlo así ya que la seguridad no es un aspecto importante ahora mismo en este proyecto.
+Realmente está sirviendo la carpeta principal, pero los tests están configurados para acceder a la ruta www/.
 Para acceder a la página web:
 http://localhost:8080/www/
 
@@ -53,6 +53,13 @@ Una vez que hemos configurado el entorno, instalado las dependencias y levantado
 ```bash
 make test
 ```
+
+Sin embargo, si no queremos levantar a mano el servidor en python, podemos ejecutar el siguiente comando, que levantará y cerrará el servidor por nosotros:
+```bash
+make testAutoServer
+```
+Este último comando solo funciona en sistemas Linux y OsX.
+
 ```mermaid
 graph LR
 A[project] --> B(virtualenv venv)
