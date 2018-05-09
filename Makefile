@@ -1,3 +1,4 @@
+
 test: executeTests
 
 executeTests:
@@ -17,8 +18,11 @@ venv:
 startServer:
 	cd www
 	python -m SimpleHTTPServer 8080 &
+	ID=$(echo $!)
+	echo ${ID}
+	echo hola
 
 stopServer:
-	kill $(server.PID)
+	kill "${ID}"
 
 
