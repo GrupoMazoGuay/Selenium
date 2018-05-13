@@ -1,9 +1,15 @@
-Feature: Computamos una palabra
-	Para computar una palabra
-	Como usuario
-	Vamos a procesar un string con una sola palabra
+Feature: Cantidad palabras
+  In Metemos palabra Piscolabis
+  As Pulsando ejecutar
+  I Vemos el string 1
 
-    Scenario: Computar "Piscolabis"
-        Given Pasamos el string Piscolabis
-        When I compute its factorial
-        Then I see the number 1
+  Scenario: Introducimos una palabra
+    Given I have the string "Piscolabis"
+    When Pulsamos ejecutar
+    Then I see the number is 1
+
+  Scenario: Introducimos varias palabras
+    Given I have the string "b b a a a c"
+    When Pulsamos ejecutar
+    Then I see the number is 3
+

@@ -6,44 +6,45 @@ from selenium.webdriver.common.keys import Keys
 import pdb
 
 
-@step('Pasamos el string (\s+)')
-def have_the_number(step, string):
-    textWords = string
+from lettuce import *
 
-    driver = webdriver.Chrome('/usr/local/bin/chromedriver')
-    driver.get("http://localhost:8080/")
 
-    text = driver.find_element_by_name("text")
+@step('I have the string "(.*)"')
+def have_the_string(step, string):
+    world.driver = webdriver.Chrome('/usr/local/bin/chromedriver')
+    world.driver.get("http://localhost:8080/")
+    text = world.driver.find_element_by_name("text")
+    text.send_keys(string)
+    world.string = string
 
-    reset = driver.find_element_by_id("reset")
-    execute = driver.find_element_by_id("execute")
 
-    text.send_keys(textWords)
+@step
+def i_put_it_in_upper_case(step):
+    reset = world.driver.find_element_by_id("reset")
+    execute = world.driver.find_element_by_id("execute")
     execute.send_keys("\n")
-
-    p1 = driver.find_element_by_id("p1")
-    p2 = driver.find_element_by_id("p2")
-
-    assert p1.text == "{Piscolabis:1}"
-    assert p2.text == "1"
-
-    driver.close()
+    p1 = world.driver.find_element_by_id("p1")
+    world.string = p1.text
 
 
-@step('I compute its factorial')
-def compute_its_factorial(step):
-    world.number = factorial(world.number)
+@step
+def see_the_string_is(step, expected):
+    '''I see the string is "(.*)"'''
+    assert world.string == expected
+    world.driver.close()
 
 
-@step('I see the number (\d+)')
-def check_number(step, expected):
-    expected = int(expected)
-    assert world.number == 1, \
-        "Got %d" % world.number
+@step
+def see_the_number_is(step, expected):
+    '''I see the number is (\d+)'''
+    assert world.string == expected
+    world.driver.close()
 
 
-def factorial(number):
-    if number == 0:
-        return 1
-    else:
-        return number * factorial(number - 1)
+@step('Pulsamos ejecutar')
+def pulsamos_ejecutar(step):
+    reset = world.driver.find_element_by_id("reset")
+    execute = world.driver.find_element_by_id("execute")
+    execute.send_keys("\n")
+    p2 = world.driver.find_element_by_id("p2")
+    world.string = p2.text
